@@ -1,6 +1,6 @@
 package edu.java.intro;
 
-public class IntroMain {
+public class IntroMain  {
 
 	public static void main(String[] args) {
 		System.out.println("Hello, Java!");
