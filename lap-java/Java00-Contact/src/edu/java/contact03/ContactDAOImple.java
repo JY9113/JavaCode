@@ -1,5 +1,11 @@
 package edu.java.contact03;
 
+import java.util.ArrayList;
+
+// array 대신 ArrayList 사용!!!
+
+
+
 public class ContactDAOImple implements ContactDAO {
 
 	// singleton 패턴 적용
@@ -23,7 +29,9 @@ public class ContactDAOImple implements ContactDAO {
 	public static final int SUCCESS = 1;
 	public static final int FAIL = 0;
 	
-	private ContactVO[] list = new ContactVO[MAX];
+	//private ContactVO[] list = new ContactVO[MAX];
+	private ArrayList<ContactVO> list = new ArrayList<>();
+	
 	private int count;
 	
 	public int getCount() {
@@ -32,9 +40,10 @@ public class ContactDAOImple implements ContactDAO {
 	
 	@Override
 	public int insert(ContactVO vo) {
+		
+		
 		if (vo != null) {
-			list[count] = vo;
-			count++;
+			list.add(vo);
 			return SUCCESS;
 		}
 		else 
@@ -42,14 +51,14 @@ public class ContactDAOImple implements ContactDAO {
 	}
 
 	@Override
-	public ContactVO[] selectAll() {
+	public ArrayList<ContactVO> selectAll() {
 		return list;
 	}
 
 	@Override
 	public ContactVO select(int index) {
 		if(index >=0 && index < MAX) {
-			return list[index];
+			return list.get(index);
 		}
 		else {
 			return null;
@@ -62,9 +71,9 @@ public class ContactDAOImple implements ContactDAO {
 		if (index >= 0 && index < count) {	// 데이터가 있는 부분에서만 수정이 이뤄져야 하기 때문.
 			// id는 회원정보에서 수정하지 않기 때문에 하지 않는다.
 			if ( vo.getName() == null && vo.getPhone() != null) {
-				list[index].setPhone(vo.getPhone());
+				list.get(index).setPhone(vo.getPhone());
 			} else if ( vo.getName() == null && vo.getEmail() != null) {
-				list[index].setEmail(vo.getEmail());
+				list.get(index).setEmail(vo.getEmail());
 			} else {
 				return FAIL;
 			}

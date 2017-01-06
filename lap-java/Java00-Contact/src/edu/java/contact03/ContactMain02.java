@@ -1,5 +1,6 @@
 package edu.java.contact03;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class ContactMain02 {
@@ -148,11 +149,11 @@ public class ContactMain02 {
 			// DAO 의 select() 메소드 호출 - 배열 리턴 받음
 			System.out.println();
 			System.out.println("          * 전체 검색 메뉴 ");
-			ContactVO[] list = dao.selectAll();
+			ArrayList<ContactVO> list = dao.selectAll();
 			int count = ((ContactDAOImple) dao).getCount();			
 			for(int i = 0; i < count; i++) {
 				System.out.println("                           회원 정보 [ " + (i + 1) + "]");
-				System.out.println(list[i]);
+				System.out.println(list.get(i));
 				System.out.println();
 			}			
 		}
