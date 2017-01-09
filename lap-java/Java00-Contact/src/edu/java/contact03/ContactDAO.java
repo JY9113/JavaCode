@@ -15,4 +15,8 @@ public interface ContactDAO {
 	
 	// 수정 기능
 	public abstract int update(int index, ContactVO vo);
+	
+	// 삭제 기능
+	public abstract int delete(int index);
+	
 }

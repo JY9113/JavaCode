@@ -39,8 +39,7 @@ public class ContactDAOImple implements ContactDAO {
 	}
 	
 	@Override
-	public int insert(ContactVO vo) {
-		
+	public int insert(ContactVO vo) {		
 		
 		if (vo != null) {
 			list.add(vo);
@@ -57,7 +56,7 @@ public class ContactDAOImple implements ContactDAO {
 
 	@Override
 	public ContactVO select(int index) {
-		if(index >=0 && index < MAX) {
+		if(index >=0 && index < list.size()) {
 			return list.get(index);
 		}
 		else {
@@ -68,7 +67,7 @@ public class ContactDAOImple implements ContactDAO {
 	@Override
 	public int update(int index, ContactVO vo) {
 		// 해당 index에 있는 내용을 vo의 내용을 바꿔준다.
-		if (index >= 0 && index < count) {	// 데이터가 있는 부분에서만 수정이 이뤄져야 하기 때문.
+		if (index >= 0 && index < list.size()) {	// 데이터가 있는 부분에서만 수정이 이뤄져야 하기 때문.
 			// id는 회원정보에서 수정하지 않기 때문에 하지 않는다.
 			if ( vo.getName() == null && vo.getPhone() != null) {
 				list.get(index).setPhone(vo.getPhone());
@@ -82,6 +81,15 @@ public class ContactDAOImple implements ContactDAO {
 		} else { 
 			return FAIL;
 		}
+	}
+	
+	@Override
+	public int delete(int index) {
+		if (index >= 0 && index < list.size()) {
+			list.remove(index);
+			return SUCCESS;
+		}
+		return FAIL;
 	}
 
 }
