@@ -22,7 +22,6 @@ public class AnonymousExample {
 			}
 		});
 	}
-
 }
 
 class Truck implements Vehicle {
