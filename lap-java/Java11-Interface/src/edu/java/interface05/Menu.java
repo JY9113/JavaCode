@@ -12,6 +12,7 @@ public interface Menu {
 	String STR_QUIT = "프로그램 종료";
 	String STR_INSERT = "입력 메뉴";
 	String STR_SELECT = "검색 메뉴";
+	String STR_ERROR = "다시 선택하세요";
 
 	
 
