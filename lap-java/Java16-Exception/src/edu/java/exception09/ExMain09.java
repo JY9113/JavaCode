@@ -70,7 +70,7 @@ public class ExMain09 {
 		return age;
 	}
 
-} // end class ExMain09
+}
 
 
 
