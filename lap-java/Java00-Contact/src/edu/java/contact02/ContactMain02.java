@@ -11,7 +11,7 @@ public class ContactMain02 {
 	private static final int FAIL = 0;
 
 	public static void main(String[] args) {
-		System.out.println("                                                                                  연락처 Version 0.1");
+		System.out.println("                                                                                  연락처 Version 0.2");
 		scanner = new Scanner(System.in);
 		dao = ContactDAOImple.getInstance();
 		

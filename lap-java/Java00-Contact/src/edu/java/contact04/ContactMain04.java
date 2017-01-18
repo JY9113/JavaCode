@@ -1,24 +1,20 @@
-package edu.java.contact03;
+package edu.java.contact04;
 
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class ContactMain03 {
+public class ContactMain04 {
 	
 	private static Scanner scanner;
 	private static ContactDAO dao;
 	private static String inputID, inputPW, inputEmail;
 	private static final int SUCCESS = 1;
-	private static final int FAIL = 0;
 	
 
 	public static void main(String[] args) {
-		System.out.println("                                                                                  연락처 Version 0.3");
+		System.out.println("                                                                                  연락처 Version 0.4");
 		scanner = new Scanner(System.in);
 		dao = ContactDAOImple.getInstance();
-		
-
-		
 		boolean run = true;
 		
 		while (run) {
