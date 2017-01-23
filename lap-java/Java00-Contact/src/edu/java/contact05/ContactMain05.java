@@ -182,7 +182,7 @@ public class ContactMain05 {
 	} // end initialize()
 	
 	private void printAllContacts() {
-		ArrayList<ContactVO> list = dao.selectAll();
+		ArrayList<ContactVO> list = dao.selectAll(); // 우리은행 양서윤 1002749476083
 		StringBuffer buffer = new StringBuffer();
 		for(int i = 0; i < list.size(); i++) {
 			buffer.append("[" + i + "]").append(list.get(i).toString()).append("\n");			
@@ -208,35 +208,42 @@ public class ContactMain05 {
 	}
 	
 	private void searchByIndex() {
-		int indexNum = Integer.parseInt(textIndex.getText());
 		try {
-			if (indexNum < dao.selectAll().size() && indexNum >= 0) {
-				ContactVO contact = dao.select((indexNum));		
-				textArea.setText(contact.toString());		
-			} 			
-		} catch (Exception e) {
+			int indexNum = Integer.parseInt(textIndex.getText());
+			ContactVO vo = dao.select(indexNum);
 			
+			textName.setText(vo.getName());
+			textPhone.setText(vo.getPhone());
+			textEmail.setText(vo.getEmail());
+		} catch (NumberFormatException e) {
+			textArea.setText("인덱스를 숫자로 입력하세요...");
+		} catch (NullPointerException e) {
+			textArea.setText("해당 인덱스의 연락처 정보가 없습니다...");
 		}
-	}
+
+	} // end selectByIndex()
+	
 	
 	private void editContact() {
 		int indexNum = Integer.parseInt(textIndex.getText());
 		String name, phone, email;
-			
-		name = textName.getText();
-		phone = textPhone.getText();
-		email = textEmail.getText();
-		
-		ContactVO contact = new ContactVO(name, phone, email);
-
-		int result = dao.update(indexNum, contact);
-		if(result == SUCCESS) {
-			textArea.setText("수정 성공");
-		} else {
-			textArea.setText("수정 실패");
+		try {
+			name = textName.getText();
+			phone = textPhone.getText();
+			email = textEmail.getText();
+			ContactVO contact = new ContactVO(name, phone, email);
+	
+			int result = dao.update(indexNum, contact);
+			if(result == SUCCESS) {
+				textArea.setText("수정 성공");
+			} else {
+				textArea.setText("수정 실패");
+			}		
+		} catch (NumberFormatException e) {
+			textArea.setText("인덱스를 숫자로 입력하세요...");
+		} catch (NullPointerException e) {
+			textArea.setText("해당 인덱스의 연락처 정보가 없습니다...");
 		}
-
-		
 	}
 	private void deleteByIndex() {
 		int indexNum = Integer.parseInt(textIndex.getText());

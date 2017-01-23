@@ -2,6 +2,7 @@ package edu.java.contact05;
 
 import java.util.ArrayList;
 
+
 public interface ContactDAO {
 
 	// 연락처 등록

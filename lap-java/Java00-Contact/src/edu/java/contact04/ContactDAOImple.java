@@ -165,16 +165,20 @@ public class ContactDAOImple implements ContactDAO {
 
 	@Override
 	public int update(int index, ContactVO vo) {
-		if (index >= 0 && index < list.size()) {
-//			list.set(index, vo);
-			list.get(index).setName(vo.getName());
-			list.get(index).setPhone(vo.getPhone());
-			list.get(index).setEmail(vo.getEmail());
+		// 해당 index에 있는 내용을 vo의 내용을 바꿔준다.
+		if (index >= 0 && index < list.size()) {	// 데이터가 있는 부분에서만 수정이 이뤄져야 하기 때문.
+			// id는 회원정보에서 수정하지 않기 때문에 하지 않는다.
+			if ( vo.getName() == null && vo.getPhone() != null) {
+				list.get(index).setPhone(vo.getPhone());
+			} else if ( vo.getName() == null && vo.getEmail() != null) {
+				list.get(index).setEmail(vo.getEmail());
+			} else {
+				return FAIL;
+			}			
 			writeDataToFile();
-			
-			return 1;
-		} else {
-			return 0;
+			return SUCCESS;
+		} else { 
+			return FAIL;
 		}
 	}
 	
