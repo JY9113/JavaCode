@@ -25,7 +25,6 @@ public class GuiMain01 {
 			}
 		});
 	} // end main()
-
 	/**
 	 * Create the application.
 	 */
