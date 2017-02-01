@@ -37,7 +37,7 @@ public class JDBCMain05 {
 			// PreaparedStatement 객체 생성
 			pstmt = conn.prepareStatement(SQL_DELETE);
 			
-			System.out.println("삭제할 인덱스 입력");
+			System.out.println("삭제할 인덱스 입력   ");
 			int cid = sc.nextInt();
 			sc.nextLine();	// 숫자 뒤에 입력된 엔터를 제거
 			
