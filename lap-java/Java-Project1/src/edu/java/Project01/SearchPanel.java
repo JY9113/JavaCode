@@ -45,7 +45,6 @@ public class SearchPanel extends JPanel {
 		
 		wineNameArea = new JTextArea();
 		wineNameArea.setFont(new Font("1훈하얀고양이 R", Font.PLAIN, 25));
-		wineNameArea.setText("San Pedro 1865 Single Vineyard Cabernet Sauvignon");
 		wineNameArea.setBounds(100, 66, 494, 34);
 		add(wineNameArea);
 		
@@ -55,7 +54,6 @@ public class SearchPanel extends JPanel {
 		add(lblWineType);
 		
 		wineTypeArea = new JTextArea();
-		wineTypeArea.setText("Sparkling Wine");
 		wineTypeArea.setFont(new Font("1훈하얀고양이 R", Font.PLAIN, 20));
 		wineTypeArea.setBounds(411, 124, 178, 25);
 		add(wineTypeArea);
@@ -66,7 +64,6 @@ public class SearchPanel extends JPanel {
 		add(lblWineGrape);
 		
 		wineGrapeArea = new JTextArea();
-		wineGrapeArea.setText("Cabernet Sauvignon");
 		wineGrapeArea.setFont(new Font("1훈하얀고양이 R", Font.PLAIN, 20));
 		wineGrapeArea.setBounds(411, 159, 178, 25);
 		add(wineGrapeArea);
@@ -77,7 +74,6 @@ public class SearchPanel extends JPanel {
 		add(lblWineRegion);
 		
 		wineRegionArea = new JTextArea();
-		wineRegionArea.setText("New Zealand");
 		wineRegionArea.setFont(new Font("1훈하얀고양이 R", Font.PLAIN, 20));
 		wineRegionArea.setBounds(411, 194, 136, 25);
 		add(wineRegionArea);
@@ -88,7 +84,6 @@ public class SearchPanel extends JPanel {
 		add(lblWineSugar);
 		
 		wineSugarArea = new JTextArea();
-		wineSugarArea.setText("Very Sweet");
 		wineSugarArea.setFont(new Font("1훈하얀고양이 R", Font.PLAIN, 20));
 		wineSugarArea.setBounds(411, 229, 136, 25);
 		add(wineSugarArea);
@@ -99,7 +94,6 @@ public class SearchPanel extends JPanel {
 		add(lblWineAlcohol);
 		
 		wineAlcoholArea = new JTextArea();
-		wineAlcoholArea.setText("Sparkling Wine");
 		wineAlcoholArea.setFont(new Font("1훈하얀고양이 R", Font.PLAIN, 20));
 		wineAlcoholArea.setBounds(411, 264, 136, 25);
 		add(wineAlcoholArea);
@@ -110,7 +104,6 @@ public class SearchPanel extends JPanel {
 		add(lblWineBody);
 		
 		wineBodyArea = new JTextArea();
-		wineBodyArea.setText("Medium Body");
 		wineBodyArea.setFont(new Font("1훈하얀고양이 R", Font.PLAIN, 20));
 		wineBodyArea.setBounds(411, 299, 136, 25);
 		add(wineBodyArea);

@@ -31,8 +31,8 @@ public interface WineOracleQuery {
 	public static final String WINE_SELECT_ORDERBY_GRAPES = "select * from WINELIST order by GRAPES";
 	
 	// select * from winelist where cid = ?
-//	public static final String SELECT_BY_WINENAME = "select * from WINELIST where WINE_NAME like ?";
-	public static final String SELECT_BY_WINENAME = "select * from WINELIST where WINE_NAME = ?";
+	public static final String SELECT_BY_WINENAME = "select * from WINELIST where lower(WINE_NAME) like ?";
+//	public static final String SELECT_BY_WINENAME = "select * from WINELIST where WINE_NAME = ?";
 	// insert into winelist values(WINE_ID, WINE_NAME, WINE_TYPE, GRAPES, REGION)
 	// insert into wineTASTE values(WINE_ID, ALCOHOL, BODY, SUGAR_CONTENT)
 	// insert int personal values(person_ID, P_GRAPES, P_REGION, P_ALCOHOL, P_BODY, P_SUGAR)

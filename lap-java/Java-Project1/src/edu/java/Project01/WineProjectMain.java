@@ -133,7 +133,7 @@ public class WineProjectMain {
 	
 	public void searchByWineName() {
 		String wineName = searchPanel.nameSearchArea.getText();
-		WineVO w_vo = dao.selectWine(wineName);
+		WineVO w_vo = dao.selectWine(wineName + "%");
 		StringBuffer buffer = new StringBuffer();
 		buffer.append(w_vo.getAlcohol());
 		searchPanel.wineNameArea.setText(w_vo.getWine_name());
