@@ -15,14 +15,15 @@ import javax.swing.JTextField;
 
 public class SearchPanel extends JPanel {
 
+	private WineDAO dao;
 
-	private JTextField nameSearchArea;
-	private JTextArea wineNameArea, winePicArea, wineTypeArea, wineBodyArea, wineAlcoholArea, wineSugarArea, wineRegionArea, wineGrapeArea;
-	private JPanel searchPanel;
-	private JButton searchBtn;
+	public JTextField nameSearchArea;
+	public JTextArea wineNameArea, winePicArea, wineTypeArea, wineBodyArea, wineAlcoholArea, wineSugarArea, wineRegionArea, wineGrapeArea;
+//	private JPanel searchPanel;
+	public JButton searchBtn;
 
 	public SearchPanel() {
-
+		dao = WineDAOImple.getInstance();
 		setLayout(null);
 		setBackground(Color.RED);
 		setBounds(0, 70, 695, 375);
@@ -34,11 +35,6 @@ public class SearchPanel extends JPanel {
 		nameSearchArea.setColumns(10);
 		
 		searchBtn = new JButton("ENTER");
-		searchBtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-//				WineProjectMain.searchByWineName();
-			}
-		});
 		searchBtn.setBounds(509, 14, 80, 25);
 		add(searchBtn);
 		
@@ -120,6 +116,7 @@ public class SearchPanel extends JPanel {
 		add(wineBodyArea);
 	}
 	
+
 	
 
 }

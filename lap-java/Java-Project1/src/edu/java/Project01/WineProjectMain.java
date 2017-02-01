@@ -113,7 +113,11 @@ public class WineProjectMain {
 		});
 		/**************************************************    WINE   SEARCH     **************************************************/
 		
-	
+		searchPanel.searchBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				searchByWineName();
+			}
+		});
 
 		/**************************************************         LIST     **************************************************/
 		
@@ -126,19 +130,21 @@ public class WineProjectMain {
 		
 	}
 	
+	
 	public void searchByWineName() {
-		String wineName = nameSearchArea.getText();
-		WineVO w_vo = dao.selectWine(wineName + "%");
+		String wineName = searchPanel.nameSearchArea.getText();
+		WineVO w_vo = dao.selectWine(wineName);
 		StringBuffer buffer = new StringBuffer();
 		buffer.append(w_vo.getAlcohol());
-		wineNameArea.setText(w_vo.getWine_name());
-		wineTypeArea.setText(w_vo.getWine_type());
-		wineGrapeArea.setText(w_vo.getGrapes());
-		wineRegionArea.setText(w_vo.getRegion());
-		wineSugarArea.setText(w_vo.getSugar_content());
-		wineAlcoholArea.setText(buffer.toString());
-		wineBodyArea.setText(w_vo.getBody());
+		searchPanel.wineNameArea.setText(w_vo.getWine_name());
+		searchPanel.wineTypeArea.setText(w_vo.getWine_type());
+		searchPanel.wineGrapeArea.setText(w_vo.getGrapes());
+		searchPanel.wineRegionArea.setText(w_vo.getRegion());
+		searchPanel.wineSugarArea.setText(w_vo.getSugar_content());
+		searchPanel.wineAlcoholArea.setText(buffer.toString());
+		searchPanel.wineBodyArea.setText(w_vo.getBody());
 		
 		
 	}
+
 }
