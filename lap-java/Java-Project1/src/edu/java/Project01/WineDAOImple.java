@@ -96,10 +96,8 @@ public class WineDAOImple implements WineDAO {
 			e.printStackTrace();
 		} finally {
 			closeResources(conn, pstmt, rs);
-		}
-		
-		return winelist;
-		
+		}		
+		return winelist;		
 	}
 	
 	@Override
@@ -180,7 +178,7 @@ public class WineDAOImple implements WineDAO {
 				String sugar = rs.getString(8);
 				
 				w_vo = new WineVO(w_id, w_name, w_type, grapes, region, alcohol, body, sugar);
-			}
+			} 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -191,20 +189,98 @@ public class WineDAOImple implements WineDAO {
 
 	@Override
 	public int insertWine(WineVO w_vo) {
-		// TODO Auto-generated method stub
-		return 0;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		int result = 0;
+		try {
+			DriverManager.registerDriver(new OracleDriver());
+			
+			conn = DriverManager.getConnection(URL, USER, PASSWD);
+			pstmt = conn.prepareStatement(INSERT_WINELIST);
+			pstmt.setInt(1, w_vo.getWine_id());
+			pstmt.setString(2, w_vo.getWine_name());
+			pstmt.setString(3, w_vo.getWine_type());
+			pstmt.setString(4, w_vo.getGrapes());
+			pstmt.setString(5, w_vo.getRegion());
+			pstmt.setInt(6, w_vo.getAlcohol());
+			pstmt.setString(7, w_vo.getBody());
+			pstmt.setString(8, w_vo.getSugar_content());
+			
+			result = pstmt.executeUpdate();		
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			closeResources(conn, pstmt);
+		}		
+		return result;
 	}
 
 	@Override
 	public int insertPerson(PersonVO p_vo) {
-		// TODO Auto-generated method stub
-		return 0;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		int result = 0;
+		try {
+			DriverManager.registerDriver(new OracleDriver());
+			
+			conn = DriverManager.getConnection(URL, USER, PASSWD);
+			pstmt = conn.prepareStatement(INSERT_PERSONAL);
+			pstmt.setInt(1, p_vo.getPerson_id());
+			pstmt.setString(2, p_vo.getP_name());
+			pstmt.setString(3, p_vo.getP_region());
+			pstmt.setString(4, p_vo.getP_type());
+			pstmt.setString(5, p_vo.getP_body());
+			pstmt.setString(6, p_vo.getP_sugar());
+			
+			result = pstmt.executeUpdate();		
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			closeResources(conn, pstmt);
+		}		
+		return result;
 	}
 
 	@Override
 	public int updateWine(WineVO w_vo) {
-		// TODO Auto-generated method stub
-		return 0;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		try {
+			DriverManager.registerDriver(new OracleDriver());			
+			conn = DriverManager.getConnection(URL, USER, PASSWD);
+			pstmt = conn.prepareStatement(UPDATE_WINELIST);
+			
+			int w_id = w_vo.getWine_id();
+			String w_name  = w_vo.getWine_name();
+			String w_type = w_vo.getWine_type();
+			String grapes = w_vo.getGrapes();
+			String region = w_vo.getRegion();
+			int alcohol = w_vo.getAlcohol();
+			String body = w_vo.getBody();
+			String sugar = w_vo.getSugar_content();
+			
+			
+			pstmt.setString(1, w_name);
+			pstmt.setString(2, w_type);
+			pstmt.setString(3, grapes);
+			pstmt.setString(4, region);
+			pstmt.setInt(5, alcohol);
+			pstmt.setString(6, body);
+			pstmt.setString(7, sugar);
+			pstmt.setInt(8, w_id);
+			
+			result = pstmt.executeUpdate();			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			closeResources(conn, pstmt);
+		}
+		
+		return result;
 	}
 
 	@Override
@@ -218,5 +294,52 @@ public class WineDAOImple implements WineDAO {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+	
+	@Override
+	public int countWine() {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int count = 0;		
+		try {
+			DriverManager.registerDriver(new OracleDriver());
+			
+			conn = DriverManager.getConnection(URL, USER, PASSWD);
+			pstmt = conn.prepareStatement(COUNT_WINE);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				count = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return count;
+	}
+	
+	@Override
+	public int countPerson() {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int count = 0;		
+		try {
+			DriverManager.registerDriver(new OracleDriver());
+			
+			conn = DriverManager.getConnection(URL, USER, PASSWD);
+			pstmt = conn.prepareStatement(COUNT_PERSON);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				count = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return count;
+	}
+	@Override
+	public ArrayList<WineVO> selectBestWine() {
+		return null;
+	}
+	
 
 }

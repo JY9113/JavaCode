@@ -2,6 +2,21 @@ package edu.java.Project01;
 
 import java.util.ArrayList;
 
+//
+//select *
+//from WINELIST A, PERSONAL B
+//WHERE A.REGION = B.P_REGION 
+//AND A.SUGAR_CONTENT = B.P_SUGAR 
+//AND A.WINE_TYPE = B.P_TYPE
+//AND A.BODY = B.P_BODY
+//AND B.P_NAME= 'ccc'
+//ORDER BY A.ALCOHOL;
+//
+//
+//select *
+//from WINELIST A, PERSONAL B
+//WHERE A.REGION = B.P_REGION 
+//AND A.SUGAR_CONTENT = B.P_SUGAR;
 
 public interface WineDAO {
 	
@@ -13,5 +28,7 @@ public interface WineDAO {
 	public abstract int updateWine(WineVO w_vo);
 	public abstract int updatePerson(PersonVO p_vo);
 	public abstract int deleteWine(int wine_id);
-
+	public abstract int countWine();
+	public abstract int countPerson();
+	public ArrayList<WineVO> selectBestWine();
 }

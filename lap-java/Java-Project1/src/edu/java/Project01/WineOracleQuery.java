@@ -35,14 +35,21 @@ public interface WineOracleQuery {
 //	public static final String SELECT_BY_WINENAME = "select * from WINELIST where WINE_NAME = ?";
 	// insert into winelist values(WINE_ID, WINE_NAME, WINE_TYPE, GRAPES, REGION)
 	// insert into wineTASTE values(WINE_ID, ALCOHOL, BODY, SUGAR_CONTENT)
-	// insert int personal values(person_ID, P_GRAPES, P_REGION, P_ALCOHOL, P_BODY, P_SUGAR)
+	// insert int personal values(person_ID, P_REGION, P_TYPE , P_BODY, P_SUGAR)
 	public static final String INSERT_WINELIST = "insert into WINELIST values(?, ?, ?, ?, ?, ?, ?, ?)";
 	public static final String INSERT_PERSONAL = "insert into PERSONAL values(?, ?, ?, ?, ?, ?)";
 	
 	// update
-	public static final String UPDATE_WINELIST = "update WINELIST set WINE_NAME = ?, " + "WINE_TYPE = ?, " + "GRAPES = ?, " + 
-											  "REGION = ? ALCOHOL = ?, BODY = ?, SUGAR_CONTENT= ? where WINE_ID = ?";
+	public static final String UPDATE_WINELIST = "update WINELIST set WINE_NAME = ?, WINE_TYPE = ?, GRAPES = ?, "
+			+ "								REGION = ?, ALCOHOL = ?, BODY = ?, SUGAR_CONTENT= ? where WINE_ID = ?";
 	// delete from ex_contact where cid = ?
 	public static final String DELETE_WINELIST = "delete from WINELIST where WINE_ID = ?";
+	
+	public static final String COUNT_WINE = "select count(*) from WINELIST";
+	public static final String COUNT_PERSON = "select count(*) from PERSONAL";
+	public static final String SELECT_BESTWINE = "select * from WINELIST A, PERSONAL B "
+			+ "								WHERE A.REGION = B.P_REGION AND A.SUGAR_CONTENT = B.P_SUGAR "
+			+ "AND A.WINE_TYPE = B.P_TYPE AND A.BODY = B.P_BODY AND B.P_NAME= 'ccc' ORDER BY A.ALCOHOL";
+
 
 }

@@ -15,15 +15,14 @@ import javax.swing.JComboBox;
 public class EditPanel extends JPanel{
 
 
-	private JPanel editPanel;
-	private JTextField editNameField,	 editGrapeField, editRegionField, editAlcoholField;
-	private JLabel lblEditAlcohol, lblEditSugar, lblEditBody, lblEditName, cautionMsg, lblEditGrapes, lblEditRegion, lblEditColor;
-	private JComboBox sugarComboBox, bodyComboBox, typeComboBox;
-	private JButton updateWineBtn, insertWineBtn, nameFindBtn;
+	public JTextField editWineNameField,	 editGrapeField, editRegionField, editAlcoholField;
+	private JLabel lblEditAlcohol, lblEditSugar, lblEditBody, lblEditName, lblEditGrapes, lblEditRegion, lblEditColor;
+	public JComboBox sugarComboBox, bodyComboBox, typeComboBox;
+	public JButton insertWineBtn;
 
 	public EditPanel() {
 		setLayout(null);
-		setBackground(Color.PINK);
+		setBackground(Color.WHITE);
 		setBounds(0, 70, 695, 375);
 		
 		lblEditName = new JLabel("이름");
@@ -31,16 +30,11 @@ public class EditPanel extends JPanel{
 		lblEditName.setBounds(135, 65, 35, 35);
 		add(lblEditName);
 		
-		editNameField = new JTextField();
-		editNameField.setFont(new Font("1훈하얀고양이 R", Font.PLAIN, 17));
-		editNameField.setBounds(180, 65, 270, 35);
-		add(editNameField);
-		editNameField.setColumns(10);
-		
-		nameFindBtn= new JButton("찾기");
-		nameFindBtn.setFont(new Font("1훈하얀고양이 R", Font.PLAIN, 18));
-		nameFindBtn.setBounds(455, 65, 95, 35);
-		add(nameFindBtn);
+		editWineNameField = new JTextField();
+		editWineNameField.setFont(new Font("1훈하얀고양이 R", Font.PLAIN, 17));
+		editWineNameField.setBounds(180, 65, 370, 35);
+		add(editWineNameField);
+		editWineNameField.setColumns(10);
 		
 		lblEditGrapes = new JLabel("품종");
 		lblEditGrapes.setFont(new Font("1훈하얀고양이 R", Font.BOLD, 25));
@@ -96,7 +90,7 @@ public class EditPanel extends JPanel{
 		sugarComboBox.setBounds(295, 260, 91, 35);
 		add(sugarComboBox);
 		
-		String[] body = {"Medium Body", "Light Body", "Full Body"};
+		String[] body = {"Full Body", "Medium Body", "Light Body"};
 		bodyComboBox = new JComboBox(body);
 		bodyComboBox.setBounds(445, 260, 105, 35);
 		add(bodyComboBox);
@@ -106,19 +100,9 @@ public class EditPanel extends JPanel{
 		typeComboBox.setBounds(400, 195, 150, 35);
 		add(typeComboBox);
 		
-		updateWineBtn = new JButton("수정");
-		updateWineBtn.setFont(new Font("1훈하얀고양이 R", Font.PLAIN, 18));
-		updateWineBtn.setBounds(216, 320, 95, 30);
-		add(updateWineBtn);
-		
 		insertWineBtn = new JButton("등록");
-		insertWineBtn.setBounds(375, 321, 95, 30);
+		insertWineBtn.setBounds(295, 323, 95, 30);
 		add(insertWineBtn);
-		
-		cautionMsg = new JLabel("\"수정을 원하시면 먼저 이름으로 검색해 주세요\"");
-		cautionMsg.setFont(new Font("1훈하얀고양이 R", Font.BOLD, 25));
-		cautionMsg.setBounds(165, 20, 361, 35);
-		add(cautionMsg);
 	}
 
 }

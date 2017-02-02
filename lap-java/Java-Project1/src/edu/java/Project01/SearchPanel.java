@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -18,14 +19,15 @@ public class SearchPanel extends JPanel {
 	private WineDAO dao;
 
 	public JTextField nameSearchArea;
-	public JTextArea wineNameArea, winePicArea, wineTypeArea, wineBodyArea, wineAlcoholArea, wineSugarArea, wineRegionArea, wineGrapeArea;
+	public JTextArea wineNameArea, winePicArea, wineAlcoholArea, wineRegionArea, wineGrapeArea;
 //	private JPanel searchPanel;
-	public JButton searchBtn;
+	public JComboBox wineTypeArea, wineBodyArea, wineSugarArea, ratingComboBox;
+	public JButton searchBtn, updateBtn;
 
 	public SearchPanel() {
 		dao = WineDAOImple.getInstance();
 		setLayout(null);
-		setBackground(Color.RED);
+		setBackground(Color.PINK);
 		setBounds(0, 70, 695, 375);
 
 		
@@ -34,13 +36,13 @@ public class SearchPanel extends JPanel {
 		add(nameSearchArea);
 		nameSearchArea.setColumns(10);
 		
-		searchBtn = new JButton("ENTER");
+		searchBtn = new JButton("입력");
 		searchBtn.setBounds(509, 14, 80, 25);
 		add(searchBtn);
 		
 		winePicArea = new JTextArea();
 		winePicArea.setText("IMAGE");
-		winePicArea.setBounds(113, 118, 178, 229);
+		winePicArea.setBounds(113, 118, 178, 206);
 		add(winePicArea);
 		
 		wineNameArea = new JTextArea();
@@ -48,16 +50,7 @@ public class SearchPanel extends JPanel {
 		wineNameArea.setBounds(100, 66, 494, 34);
 		add(wineNameArea);
 		
-		JLabel lblWineType = new JLabel("타입");
-		lblWineType.setFont(new Font("1훈하얀고양이 R", Font.PLAIN, 25));
-		lblWineType.setBounds(360, 124, 39, 25);
-		add(lblWineType);
-		
-		wineTypeArea = new JTextArea();
-		wineTypeArea.setFont(new Font("1훈하얀고양이 R", Font.PLAIN, 20));
-		wineTypeArea.setBounds(411, 124, 178, 25);
-		add(wineTypeArea);
-		
+			
 		JLabel lblWineGrape = new JLabel("품종");
 		lblWineGrape.setFont(new Font("1훈하얀고양이 R", Font.PLAIN, 25));
 		lblWineGrape.setBounds(360, 159, 39, 25);
@@ -78,16 +71,7 @@ public class SearchPanel extends JPanel {
 		wineRegionArea.setBounds(411, 194, 136, 25);
 		add(wineRegionArea);
 		
-		JLabel lblWineSugar = new JLabel("당도");
-		lblWineSugar.setFont(new Font("1훈하얀고양이 R", Font.PLAIN, 25));
-		lblWineSugar.setBounds(360, 229, 39, 25);
-		add(lblWineSugar);
-		
-		wineSugarArea = new JTextArea();
-		wineSugarArea.setFont(new Font("1훈하얀고양이 R", Font.PLAIN, 20));
-		wineSugarArea.setBounds(411, 229, 136, 25);
-		add(wineSugarArea);
-		
+			
 		JLabel lblWineAlcohol = new JLabel("도수");
 		lblWineAlcohol.setFont(new Font("1훈하얀고양이 R", Font.PLAIN, 25));
 		lblWineAlcohol.setBounds(360, 264, 39, 25);
@@ -103,13 +87,42 @@ public class SearchPanel extends JPanel {
 		lblWineBody.setBounds(348, 299, 51, 25);
 		add(lblWineBody);
 		
-		wineBodyArea = new JTextArea();
+		String[] body = {"Full Body", "Medium Body", "Light Body"};
+		wineBodyArea = new JComboBox(body);
 		wineBodyArea.setFont(new Font("1훈하얀고양이 R", Font.PLAIN, 20));
 		wineBodyArea.setBounds(411, 299, 136, 25);
 		add(wineBodyArea);
+		
+		JLabel lblWineType = new JLabel("타입");
+		lblWineType.setFont(new Font("1훈하얀고양이 R", Font.PLAIN, 25));
+		lblWineType.setBounds(360, 124, 39, 25);
+		add(lblWineType);
+		
+		String[] type = {"Red Wine", "White Wine", "Rose Wine", "Sparkling Wine"};
+		wineTypeArea = new JComboBox(type);
+		wineTypeArea.setFont(new Font("1훈하얀고양이 R", Font.PLAIN, 20));
+		wineTypeArea.setBounds(411, 124, 178, 25);
+		add(wineTypeArea);
+		
+		JLabel lblWineSugar = new JLabel("당도");
+		lblWineSugar.setFont(new Font("1훈하얀고양이 R", Font.PLAIN, 25));
+		lblWineSugar.setBounds(360, 229, 39, 25);
+		add(lblWineSugar);
+		
+		String[] sugarContent = {"Very Sweet", "Sweet", "Normal", "Dry", "Extra Dry"};
+		wineSugarArea = new JComboBox(sugarContent);
+		wineSugarArea.setFont(new Font("1훈하얀고양이 R", Font.PLAIN, 20));
+		wineSugarArea.setBounds(411, 229, 136, 25);
+		add(wineSugarArea);
+		
+		updateBtn = new JButton("수정");
+		updateBtn.setBounds(603, 15, 80, 25);
+		add(updateBtn);
+		
+		String[] ratingNum = {"1", "2", "3", "4", "5"};
+		ratingComboBox = new JComboBox(ratingNum);
+		ratingComboBox.setFont(new Font("1훈하얀고양이 R", Font.PLAIN, 20));
+		ratingComboBox.setBounds(135, 334, 63, 25);
+		add(ratingComboBox);
 	}
-	
-
-	
-
 }

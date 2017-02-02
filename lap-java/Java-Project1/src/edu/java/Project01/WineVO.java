@@ -83,5 +83,13 @@ public class WineVO {
 	public void setSugar_content(String sugar_content) {
 		this.sugar_content = sugar_content;
 	}
+	
+//	@Override
+//	public String toString() {
+//		String str = "[" + cid + "] " + name + " | "
+//				+ phone + " | " + email;
+//		
+//		return str;
+//	}
 
 }
