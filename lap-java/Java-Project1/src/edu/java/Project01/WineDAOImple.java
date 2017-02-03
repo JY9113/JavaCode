@@ -55,25 +55,7 @@ public class WineDAOImple implements WineDAO {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		/*	
-	 	WINETASTE 
-		wine_ID		NUMBER
-		WINE_NAME	VARCHAR(200)
-		WINE_TYPE	VARCHAR(50)
-		GRAPES		VARCHAR2(100)
-		REGION		VARCHAR2(200)
-		ALCOHOL		NUMBER
-		BODY		VARCHAR2(50)
-		SUGAR_CONTENT	VARCHAR2(50)	
-		
-		PERSONAL
-		PERSON_ID		NUMBER
-		P_GRAPES		VARCHAR2(100)
-		P_REGION		VARCHAR2(200)
-		P_ALCOHOL		NUMBER
-		P_BODY			NUMBER
-		P_SUGAR			NUMBER			
-	*/
+
 		try {
 			conn = DriverManager.getConnection(URL, USER, PASSWD);
 			pstmt = conn.prepareStatement(WINE_SELECT_ORDERBY_REGION);
@@ -102,30 +84,10 @@ public class WineDAOImple implements WineDAO {
 	
 	@Override
 	public ArrayList<WineVO> selectWineOrderByGrapes() {
-		ArrayList<WineVO> winelist = new ArrayList<>();
-		
+		ArrayList<WineVO> winelist = new ArrayList<>();		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		/*	
-	 	WINETASTE 
-		wine_ID		NUMBER
-		WINE_NAME	VARCHAR(200)
-		WINE_TYPE	VARCHAR(50)
-		GRAPES		VARCHAR2(100)
-		REGION		VARCHAR2(200)
-		ALCOHOL		NUMBER
-		BODY		VARCHAR2(50)
-		SUGAR_CONTENT	VARCHAR2(50)	
-		
-		PERSONAL
-		PERSON_ID		NUMBER
-		P_GRAPES		VARCHAR2(100)
-		P_REGION		VARCHAR2(200)
-		P_ALCOHOL		NUMBER
-		P_BODY			NUMBER
-		P_SUGAR			NUMBER			
-	*/
 		try {
 			conn = DriverManager.getConnection(URL, USER, PASSWD);
 			pstmt = conn.prepareStatement(WINE_SELECT_ORDERBY_GRAPES);
@@ -150,8 +112,7 @@ public class WineDAOImple implements WineDAO {
 			closeResources(conn, pstmt, rs);
 		}
 		
-		return winelist;
-		
+		return winelist;		
 	}
 
 	@Override
@@ -338,8 +299,91 @@ public class WineDAOImple implements WineDAO {
 	}
 	@Override
 	public ArrayList<WineVO> selectBestWine() {
-		return null;
+		ArrayList<WineVO> winelist = new ArrayList<>();		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn = DriverManager.getConnection(URL, USER, PASSWD);
+			pstmt = conn.prepareStatement(SELECT_BESTWINE);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				int w_id = rs.getInt(1);
+				String w_name  = rs.getString(2);
+				String w_type = rs.getString(3);
+				String grapes = rs.getString(4);
+				String region = rs.getString(5);
+				int alcohol = rs.getInt(6);
+				String body = rs.getString(7);
+				String sugar = rs.getString(8);
+				
+				WineVO w_vo = new WineVO(w_id, w_name, w_type, grapes, region, alcohol, body, sugar);
+				winelist.add(w_vo);				
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			closeResources(conn, pstmt, rs);
+		}
+		
+		return winelist;
+	}
+	@Override
+	public WineVO select(String wineName) {
+		WineVO w_vo = null;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			conn = DriverManager.getConnection(URL, USER, PASSWD);
+			pstmt = conn.prepareStatement(SELECT);
+			pstmt.setString(1, wineName);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				int w_id = rs.getInt(1);
+				String w_name  = rs.getString(2);
+				String w_type = rs.getString(3);
+				String grapes = rs.getString(4);
+				String region = rs.getString(5);
+				int alcohol = rs.getInt(6);
+				String body = rs.getString(7);
+				String sugar = rs.getString(8);
+				
+				w_vo = new WineVO(w_id, w_name, w_type, grapes, region, alcohol, body, sugar);
+			} 
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			closeResources(conn, pstmt, rs);
+		}		
+		return w_vo;
 	}
 	
-
+	@Override
+	public void insertImage(int wineID) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		Statement stmt = null;
+		
+		try {
+			conn = DriverManager.getConnection(URL, USER, PASSWD);
+			pstmt = conn.prepareStatement(INSERT_IMAGE);
+			
+			int w_id = wineID;
+			pstmt.setInt(1, wineID);
+			pstmt.execute();
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery("select wine_id, wine_img from wineimage where wine_id = " + wineID);
+			rs.next();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
 }

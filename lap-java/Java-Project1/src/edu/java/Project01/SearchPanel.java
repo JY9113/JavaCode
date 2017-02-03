@@ -21,7 +21,7 @@ public class SearchPanel extends JPanel {
 	public JTextField nameSearchArea;
 	public JTextArea wineNameArea, winePicArea, wineAlcoholArea, wineRegionArea, wineGrapeArea;
 //	private JPanel searchPanel;
-	public JComboBox wineTypeArea, wineBodyArea, wineSugarArea, ratingComboBox;
+	public JComboBox wineTypeArea, wineBodyArea, wineSugarArea;
 	public JButton searchBtn, updateBtn;
 
 	public SearchPanel() {
@@ -120,9 +120,5 @@ public class SearchPanel extends JPanel {
 		add(updateBtn);
 		
 		String[] ratingNum = {"1", "2", "3", "4", "5"};
-		ratingComboBox = new JComboBox(ratingNum);
-		ratingComboBox.setFont(new Font("1훈하얀고양이 R", Font.PLAIN, 20));
-		ratingComboBox.setBounds(135, 334, 63, 25);
-		add(ratingComboBox);
 	}
 }

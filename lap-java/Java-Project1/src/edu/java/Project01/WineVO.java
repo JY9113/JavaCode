@@ -84,12 +84,21 @@ public class WineVO {
 		this.sugar_content = sugar_content;
 	}
 	
-//	@Override
-//	public String toString() {
-//		String str = "[" + cid + "] " + name + " | "
-//				+ phone + " | " + email;
-//		
-//		return str;
-//	}
+//	
+//	private int wine_id;
+//	private String wine_name;
+//	private String wine_type;
+//	private String grapes;
+//	private String region;
+//	private int alcohol;
+//	private String body;
+//	private String sugar_content;
+	@Override
+	public String toString() {
+		String str = "타입  :  " + wine_type + "\n품종  :  " + grapes + "\n지역  :  " + region +
+				"\n도수  :  " + alcohol + "\n바디  :  " + "\n당도  :  " + sugar_content;
+		
+		return str;
+	}
 
 }

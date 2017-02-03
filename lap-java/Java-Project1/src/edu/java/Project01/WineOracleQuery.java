@@ -22,6 +22,7 @@ public interface WineOracleQuery {
 */
 	
 	public static final String URL = "jdbc:oracle:thin:@localhost:1521:xe";
+	//@192.168.11.xx : xx 는 컴터번호
 	public static final String USER = "scott";
 	public static final String PASSWD = "tiger";
 	
@@ -31,6 +32,7 @@ public interface WineOracleQuery {
 	public static final String WINE_SELECT_ORDERBY_GRAPES = "select * from WINELIST order by GRAPES";
 	
 	// select * from winelist where cid = ?
+	public static final String SELECT = "select * from WINELIST where WINE_NAME = ?";
 	public static final String SELECT_BY_WINENAME = "select * from WINELIST where lower(WINE_NAME) like ?";
 //	public static final String SELECT_BY_WINENAME = "select * from WINELIST where WINE_NAME = ?";
 	// insert into winelist values(WINE_ID, WINE_NAME, WINE_TYPE, GRAPES, REGION)
@@ -50,6 +52,6 @@ public interface WineOracleQuery {
 	public static final String SELECT_BESTWINE = "select * from WINELIST A, PERSONAL B "
 			+ "								WHERE A.REGION = B.P_REGION AND A.SUGAR_CONTENT = B.P_SUGAR "
 			+ "AND A.WINE_TYPE = B.P_TYPE AND A.BODY = B.P_BODY AND B.P_NAME= 'ccc' ORDER BY A.ALCOHOL";
-
+	public static final String INSERT_IMAGE = "insert into wineimage(wine_id, wine_img) values(?, empty_blob())";
 
 }

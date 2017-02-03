@@ -5,6 +5,7 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.SwingConstants;
@@ -15,14 +16,14 @@ import javax.swing.JComboBox;
 public class EditPanel extends JPanel{
 
 
-	public JTextField editWineNameField,	 editGrapeField, editRegionField, editAlcoholField;
+	public JTextArea wineNameArea, winePicArea, wineAlcoholArea, wineRegionArea, wineGrapeArea;
 	private JLabel lblEditAlcohol, lblEditSugar, lblEditBody, lblEditName, lblEditGrapes, lblEditRegion, lblEditColor;
-	public JComboBox sugarComboBox, bodyComboBox, typeComboBox;
+	public JComboBox wineTypeArea, wineBodyArea, wineSugarArea;
 	public JButton insertWineBtn;
 
 	public EditPanel() {
 		setLayout(null);
-		setBackground(Color.WHITE);
+		setBackground(Color.PINK);
 		setBounds(0, 70, 695, 375);
 		
 		lblEditName = new JLabel("이름");
@@ -30,11 +31,11 @@ public class EditPanel extends JPanel{
 		lblEditName.setBounds(135, 65, 35, 35);
 		add(lblEditName);
 		
-		editWineNameField = new JTextField();
-		editWineNameField.setFont(new Font("1훈하얀고양이 R", Font.PLAIN, 17));
-		editWineNameField.setBounds(180, 65, 370, 35);
-		add(editWineNameField);
-		editWineNameField.setColumns(10);
+		wineNameArea = new JTextArea();
+		wineNameArea.setFont(new Font("1훈하얀고양이 R", Font.PLAIN, 17));
+		wineNameArea.setBounds(180, 65, 370, 35);
+		add(wineNameArea);
+		wineNameArea.setColumns(10);
 		
 		lblEditGrapes = new JLabel("품종");
 		lblEditGrapes.setFont(new Font("1훈하얀고양이 R", Font.BOLD, 25));
@@ -51,18 +52,18 @@ public class EditPanel extends JPanel{
 		lblEditColor.setBounds(350, 195, 35, 35);
 		add(lblEditColor);
 		
-		editGrapeField = new JTextField();
-		editGrapeField.setFont(new Font("1훈하얀고양이 R", Font.PLAIN, 17));
-		editGrapeField.setColumns(10);
-		editGrapeField.setBounds(180, 130, 370, 35);
-		add(editGrapeField);
+		wineGrapeArea = new JTextArea();
+		wineGrapeArea.setFont(new Font("1훈하얀고양이 R", Font.PLAIN, 17));
+		wineGrapeArea.setColumns(10);
+		wineGrapeArea.setBounds(180, 130, 370, 35);
+		add(wineGrapeArea);
 		
-		editRegionField = new JTextField();
-		editRegionField.setBackground(Color.WHITE);
-		editRegionField.setFont(new Font("1훈하얀고양이 R", Font.PLAIN, 17));
-		editRegionField.setColumns(10);
-		editRegionField.setBounds(180, 195, 155, 35);
-		add(editRegionField);
+		wineRegionArea = new JTextArea();
+		wineRegionArea.setBackground(Color.WHITE);
+		wineRegionArea.setFont(new Font("1훈하얀고양이 R", Font.PLAIN, 17));
+		wineRegionArea.setColumns(10);
+		wineRegionArea.setBounds(180, 195, 155, 35);
+		add(wineRegionArea);
 		
 		lblEditAlcohol = new JLabel("도수");
 		lblEditAlcohol.setFont(new Font("1훈하얀고양이 R", Font.BOLD, 25));
@@ -79,26 +80,26 @@ public class EditPanel extends JPanel{
 		lblEditBody.setBounds(400, 260, 35, 35);
 		add(lblEditBody);
 		
-		editAlcoholField = new JTextField();
-		editAlcoholField.setFont(new Font("1훈하얀고양이 R", Font.PLAIN, 17));
-		editAlcoholField.setColumns(10);
-		editAlcoholField.setBounds(185, 260, 55, 35);
-		add(editAlcoholField);
+		wineAlcoholArea = new JTextArea();
+		wineAlcoholArea.setFont(new Font("1훈하얀고양이 R", Font.PLAIN, 17));
+		wineAlcoholArea.setColumns(10);
+		wineAlcoholArea.setBounds(185, 260, 55, 35);
+		add(wineAlcoholArea);
 		
 		String[] sugarContent = {"Very Sweet", "Sweet", "Normal", "Dry", "Extra Dry"};
-		sugarComboBox = new JComboBox(sugarContent);
-		sugarComboBox.setBounds(295, 260, 91, 35);
-		add(sugarComboBox);
+		wineSugarArea = new JComboBox(sugarContent);
+		wineSugarArea.setBounds(295, 260, 91, 35);
+		add(wineSugarArea);
 		
 		String[] body = {"Full Body", "Medium Body", "Light Body"};
-		bodyComboBox = new JComboBox(body);
-		bodyComboBox.setBounds(445, 260, 105, 35);
-		add(bodyComboBox);
+		wineBodyArea = new JComboBox(body);
+		wineBodyArea.setBounds(445, 260, 105, 35);
+		add(wineBodyArea);
 		
 		String[] type = {"Red Wine", "White Wine", "Rose Wine", "Sparkling Wine"};
-		typeComboBox = new JComboBox(type);
-		typeComboBox.setBounds(400, 195, 150, 35);
-		add(typeComboBox);
+		wineTypeArea = new JComboBox(type);
+		wineTypeArea.setBounds(400, 195, 150, 35);
+		add(wineTypeArea);
 		
 		insertWineBtn = new JButton("등록");
 		insertWineBtn.setBounds(295, 323, 95, 30);

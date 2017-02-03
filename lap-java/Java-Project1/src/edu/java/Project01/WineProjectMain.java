@@ -44,6 +44,7 @@ public class WineProjectMain {
 	public WineVO resultVO;
 	public String resultWineName;
 
+
 	/**
 	 * Launch the application.
 	 */
@@ -151,6 +152,7 @@ public class WineProjectMain {
 				frame.getContentPane().add(menuBtnPanel);
 				frame.getContentPane().revalidate();
 				frame.getContentPane().repaint();
+				setBestWineList();
 				
 			}
 		});
@@ -168,9 +170,9 @@ public class WineProjectMain {
 				searchPanel.wineBodyArea.setVisible(true);
 				searchPanel.wineSugarArea.setVisible(true);
 				searchPanel.wineTypeArea.setVisible(true);
-				String wineName = searchPanel.nameSearchArea.getText();
-				searchByWineName(wineName);
-				printSearchResult();
+				resultWineName= searchPanel.nameSearchArea.getText();
+				resultVO = searchByWineName(resultWineName);
+				printSearchResult(resultVO);
 			}
 		});
 		searchPanel.updateBtn.addActionListener(new ActionListener() {
@@ -182,26 +184,27 @@ public class WineProjectMain {
 		/**************************************************         LIST     **************************************************/
 		listPanel.regionBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				orderByRegion();
-				DefaultListModel<String> listModel;
-				listModel = new DefaultListModel<String>();
-				for(String item : listData) {
-					listModel.addElement(item);
-				}
-				listPanel.wineList.setModel(listModel);	
+				orderByRegion();			
 			}
 		});
+		
 		listPanel.wineList.addListSelectionListener(new ListSelectionListener() {
 			
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
-				String[] result = listPanel.wineList.getSelectedValue().toString().split("[|]");
-				resultWineName = result[0];
-				changeView();
-				
+				String[] str = listPanel.wineList.getSelectedValue().toString().split("[|]");
+				resultWineName = str[0];
+				listPanel.wineNameArea.setText(resultWineName);
 			}
-			
-		});		
+		});
+
+		listPanel.resultBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {	
+				resultWineName = resultWineName.trim();
+				resultVO = searchByWineName(resultWineName);
+				printSelectedResult();
+			}
+		});
 		
 		listPanel.grapesBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -222,53 +225,70 @@ public class WineProjectMain {
 		/**************************************************         PERSONAL     **************************************************/
 		existPanel.bestWine1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				// TODO
+				resultWineName = bestWine[0];
+				resultWineName = resultWineName.trim();
+				resultVO = searchByWineName(resultWineName);
+				printBestWine();
 			}
 		});
 		
 		existPanel.bestWine2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				// TODO
+				resultWineName = bestWine[1];
+				resultWineName = resultWineName.trim();
+				resultVO = searchByWineName(resultWineName);
+				printBestWine();
 			}
 		});
 		
 		existPanel.bestWine3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				// TODO
+				resultWineName = bestWine[2];
+				resultWineName = resultWineName.trim();
+				resultVO = searchByWineName(resultWineName);
+				printBestWine();
 			}
 		});
 		
 		nonExistPanel.submitBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				insertPerson();
-			
-				
+				insertPerson();				
 			}
 		});
 		
 	}
 	
 	
-	public void searchByWineName(String wineName) {		
-		WineVO w_vo;
+	public WineVO searchByWineName(String wineName) {		
 		try {
-			w_vo = dao.selectWine("%" + wineName + "%");
+			resultVO = dao.selectWine("%" + wineName + "%");
 		} catch(NullPointerException e) {
-			w_vo = dao.selectWine(wineName + "%");				
+			resultVO = dao.selectWine(wineName + "%");				
 		}		
-		resultVO = w_vo;
-	}
-	
-	public void printSearchResult() {
-		
+		if(resultVO == null) {
+			resultVO = dao.select(wineName);
+		}
+		return resultVO;
+	}	
+	public void printSearchResult(WineVO resultVO) {
 		searchPanel.wineNameArea.setText(resultVO.getWine_name());
-//		searchPanel.wineTypeArea.setSelectedItem(w_vo.getWine_type());
-//		searchPanel.wineGrapeArea.setText(w_vo.getGrapes());
-//		searchPanel.wineRegionArea.setText(w_vo.getRegion());
-//		searchPanel.wineSugarArea.setSelectedItem(w_vo.getSugar_content());
-//		searchPanel.wineAlcoholArea.setText(String.valueOf(w_vo.getAlcohol()));
-//		searchPanel.wineBodyArea.setSelectedItem(w_vo.getBody());
-//		foundWineID = w_vo.getWine_id();
+		searchPanel.wineTypeArea.setSelectedItem(resultVO.getWine_type());
+		searchPanel.wineGrapeArea.setText(resultVO.getGrapes());
+		searchPanel.wineRegionArea.setText(resultVO.getRegion());
+		searchPanel.wineSugarArea.setSelectedItem(resultVO.getSugar_content());
+		searchPanel.wineAlcoholArea.setText(String.valueOf(resultVO.getAlcohol()));
+		searchPanel.wineBodyArea.setSelectedItem(resultVO.getBody());
+		foundWineID = resultVO.getWine_id();
+	}
+	public void printSelectedResult() {
+		listPanel.wineNameArea.setText(resultVO.getWine_name());
+		listPanel.wineTypeArea.setSelectedItem(resultVO.getWine_type());
+		listPanel.wineGrapeArea.setText(resultVO.getGrapes());
+		listPanel.wineRegionArea.setText(resultVO.getRegion());
+		listPanel.wineSugarArea.setSelectedItem(resultVO.getSugar_content());
+		listPanel.wineAlcoholArea.setText(String.valueOf(resultVO.getAlcohol()));
+		listPanel.wineBodyArea.setSelectedItem(resultVO.getBody());
+		foundWineID = resultVO.getWine_id();
 	}
 	
 	public void updateWine(int foundWineID) {
@@ -290,15 +310,14 @@ public class WineProjectMain {
 		}
 		
 	}
-	public void insertWine() {
-		
-		String w_name = editPanel.editWineNameField.getText();
-		String grapes = editPanel.editGrapeField.getText();
-		String region = editPanel.editRegionField.getText();
-		int alcohol = Integer.parseInt(editPanel.editAlcoholField.getText());
-		String sugar = (String) editPanel.sugarComboBox.getSelectedItem();
-		String body = (String)editPanel.bodyComboBox.getSelectedItem();
-		String w_type = (String)editPanel.typeComboBox.getSelectedItem();
+	public void insertWine() {		
+		String w_name = editPanel.wineNameArea.getText();
+		String grapes = editPanel.wineGrapeArea.getText();
+		String region = editPanel.wineRegionArea.getText();
+		int alcohol = Integer.parseInt(editPanel.wineAlcoholArea.getText());
+		String sugar = (String) editPanel.wineSugarArea.getSelectedItem();
+		String body = (String)editPanel.wineBodyArea.getSelectedItem();
+		String w_type = (String)editPanel.wineTypeArea.getSelectedItem();
 		wineCount++;
 		int w_id = wineCount;		
 		if(!w_name.equals("") && !grapes.equals("") && !region.equals("") && alcohol != 0 
@@ -324,14 +343,9 @@ public class WineProjectMain {
 			buffer = winelist.get(i).getWine_name() + " | " + winelist.get(i).getRegion();
 			listData[i] = buffer;	
 		}
-//		DefaultListModel<String> listModel;
-//		listModel = new DefaultListModel<String>();
-//		for(String item : listData) {
-//			listModel.addElement(item);
-//		}
-//		listPanel.wineList.setModel(listModel);		
-		
+		listPanel.wineList.setListData(listData);
 	}
+	
 	public void orderByGrapes() {
 		ArrayList<WineVO> winelist = dao.selectWineOrderByGrapes();
 		String buffer = null;
@@ -340,39 +354,7 @@ public class WineProjectMain {
 			buffer = winelist.get(i).getWine_name() + " | " + winelist.get(i).getGrapes();
 			listData[i] = buffer;	
 		}
-		DefaultListModel<String> listModel;
-		listModel = new DefaultListModel<String>();
-		for(String item : listData) {
-			listModel.addElement(item);
-		}
-		listPanel.wineList.setModel(listModel);		
-		listPanel.wineList.addListSelectionListener(new ListSelectionListener() {
-			
-
-			public void valueChanged(ListSelectionEvent e) {
-				String[] result = listPanel.wineList.getSelectedValue().toString().split("[|]");
-				String wineName = result[0];
-				System.out.println(wineName);
-				PopUpFrame pop = new PopUpFrame();
-				pop.setContentPane(searchPanel);
-				pop.setVisible(true);
-				
-			}
-		});
-	}
-	
-	public void changeView() {
-		frame.getContentPane().removeAll();
-		frame.getContentPane().add(searchPanel);
-		frame.getContentPane().add(menuBtnPanel);
-		searchPanel.wineBodyArea.setVisible(false);
-		searchPanel.wineSugarArea.setVisible(false);
-		searchPanel.wineTypeArea.setVisible(false);
-		frame.getContentPane().revalidate();
-		frame.getContentPane().repaint();
-		resultVO = dao.selectWine(resultWineName);
-
-		
+		listPanel.wineList.setListData(listData);		
 	}
 	
 	public void insertPerson() {
@@ -397,8 +379,7 @@ public class WineProjectMain {
 			}		
 		} else {
 			System.out.println("등록할 정보를 입력하세요");
-		}
-		
+		}		
 	}
 	
 	public void setBestWineList() {
@@ -408,10 +389,18 @@ public class WineProjectMain {
 		for(int i = 0; i < 3; i++) {
 			buffer = winelist.get(i).getWine_name();
 			bestWine[i] = buffer;	
+			System.out.println(bestWine[i]);
 		}
 	}
 	public void printBestWine() {
-		
+		existPanel.wineNameArea.setText(resultVO.getWine_name());
+		existPanel.wineTypeArea.setSelectedItem(resultVO.getWine_type());
+		existPanel.wineGrapeArea.setText(resultVO.getGrapes());
+		existPanel.wineRegionArea.setText(resultVO.getRegion());
+		existPanel.wineSugarArea.setSelectedItem(resultVO.getSugar_content());
+		existPanel.wineAlcoholArea.setText(String.valueOf(resultVO.getAlcohol()));
+		existPanel.wineBodyArea.setSelectedItem(resultVO.getBody());
+		foundWineID = resultVO.getWine_id();
 	}
 
 
