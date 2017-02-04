@@ -49,8 +49,8 @@ public class GuiMain13 {
 		JButton btn1 = new JButton("New Frame");
 		btn1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				MyFrame frame = new MyFrame();
-				frame.setVisible(true);
+				MyFrame myframe = new MyFrame();
+				myframe.setVisible(true);
 			}
 		});
 		btn1.setFont(new Font("굴림", Font.PLAIN, 48));

@@ -17,25 +17,6 @@ public class MyFrame extends JFrame {
 	private JPanel contentPane;
 	private JTextField textField;
 
-	/**
-	 * Launch the application.
-	 */
-//	public static void main(String[] args) {
-//		EventQueue.invokeLater(new Runnable() {
-//			public void run() {
-//				try {
-//					MyFrame frame = new MyFrame();
-//					frame.setVisible(true);
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		});
-//	}
-
-	/**
-	 * Create the frame.
-	 */
 	public MyFrame() {
 		// JFrame.EXIT_ON_CLOSE: 프로그램 종료
 		// JFrame.DISPOSE_ON_CLOSE : 현재 창만 종료
