@@ -1,5 +1,10 @@
-package edu.java.Project01;
+	package edu.java.Project01;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -7,22 +12,25 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+
+import javax.imageio.ImageIO;
+
 import oracle.jdbc.OracleDriver;
 import static edu.java.Project01.WineOracleQuery.*;
 
-public class WineDAOImple implements WineDAO {
+public class ProjectDAOImple implements ProjectDAO {
 	
-	private static WineDAOImple instance = null;
-	private WineDAOImple() {
+	private static ProjectDAOImple instance = null;
+	private ProjectDAOImple() {
 		try {
 			DriverManager.registerDriver(new OracleDriver());
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}		
 	}
-	public static WineDAOImple getInstance() {
+	public static ProjectDAOImple getInstance() {
 		if(instance == null) {
-			instance = new WineDAOImple();
+			instance = new ProjectDAOImple();
 		}
 		return instance;
 	}
@@ -49,7 +57,7 @@ public class WineDAOImple implements WineDAO {
 	}
 
 	@Override
-	public ArrayList<WineVO> selectWineOrderByRegion() {
+	public ArrayList<WineVO> selectWineOrderByRegion() throws Exception{
 		ArrayList<WineVO> winelist = new ArrayList<>();
 		
 		Connection conn = null;
@@ -71,7 +79,10 @@ public class WineDAOImple implements WineDAO {
 				String body = rs.getString(7);
 				String sugar = rs.getString(8);
 				
-				WineVO w_vo = new WineVO(w_id, w_name, w_type, grapes, region, alcohol, body, sugar);
+				InputStream in =rs.getBinaryStream(9);
+				BufferedImage bi = ImageIO.read(in);
+				
+				WineVO w_vo = new WineVO(w_id, w_name, w_type, grapes, region, alcohol, body, sugar, bi);
 				winelist.add(w_vo);				
 			}
 		} catch (SQLException e) {
@@ -83,7 +94,7 @@ public class WineDAOImple implements WineDAO {
 	}
 	
 	@Override
-	public ArrayList<WineVO> selectWineOrderByGrapes() {
+	public ArrayList<WineVO> selectWineOrderByGrapes() throws Exception {
 		ArrayList<WineVO> winelist = new ArrayList<>();		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -103,7 +114,10 @@ public class WineDAOImple implements WineDAO {
 				String body = rs.getString(7);
 				String sugar = rs.getString(8);
 				
-				WineVO w_vo = new WineVO(w_id, w_name, w_type, grapes, region, alcohol, body, sugar);
+				InputStream in =rs.getBinaryStream(9);
+				BufferedImage bi = ImageIO.read(in);
+				
+				WineVO w_vo = new WineVO(w_id, w_name, w_type, grapes, region, alcohol, body, sugar, bi);
 				winelist.add(w_vo);				
 			}
 		} catch (SQLException e) {
@@ -116,7 +130,7 @@ public class WineDAOImple implements WineDAO {
 	}
 
 	@Override
-	public WineVO selectWine(String wineName) {
+	public WineVO selectWine(String wineName) throws Exception{
 		WineVO w_vo = null;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -137,8 +151,11 @@ public class WineDAOImple implements WineDAO {
 				int alcohol = rs.getInt(6);
 				String body = rs.getString(7);
 				String sugar = rs.getString(8);
+				InputStream in =rs.getBinaryStream(9);
+				BufferedImage bi = ImageIO.read(in);
 				
-				w_vo = new WineVO(w_id, w_name, w_type, grapes, region, alcohol, body, sugar);
+				
+				w_vo = new WineVO(w_id, w_name, w_type, grapes, region, alcohol, body, sugar, bi);
 			} 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -149,15 +166,21 @@ public class WineDAOImple implements WineDAO {
 	}
 
 	@Override
-	public int insertWine(WineVO w_vo) {
+	public int insertWine(WineVO w_vo) throws Exception {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		int result = 0;
 		try {
-			DriverManager.registerDriver(new OracleDriver());
 			
 			conn = DriverManager.getConnection(URL, USER, PASSWD);
 			pstmt = conn.prepareStatement(INSERT_WINELIST);
+			
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			ImageIO.write(w_vo.getBi(), "png", baos);
+			baos.flush();
+			byte[] bytes = baos.toByteArray();
+			
+			
 			pstmt.setInt(1, w_vo.getWine_id());
 			pstmt.setString(2, w_vo.getWine_name());
 			pstmt.setString(3, w_vo.getWine_type());
@@ -166,6 +189,7 @@ public class WineDAOImple implements WineDAO {
 			pstmt.setInt(6, w_vo.getAlcohol());
 			pstmt.setString(7, w_vo.getBody());
 			pstmt.setString(8, w_vo.getSugar_content());
+			pstmt.setBytes(9, bytes);
 			
 			result = pstmt.executeUpdate();		
 			
@@ -205,7 +229,7 @@ public class WineDAOImple implements WineDAO {
 	}
 
 	@Override
-	public int updateWine(WineVO w_vo) {
+	public int updateWine (WineVO w_vo) throws Exception{
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		int result = 0;
@@ -224,6 +248,10 @@ public class WineDAOImple implements WineDAO {
 			String body = w_vo.getBody();
 			String sugar = w_vo.getSugar_content();
 			
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			ImageIO.write(w_vo.getBi(), "png", baos);
+			baos.flush();
+			byte[] bytes = baos.toByteArray();
 			
 			pstmt.setString(1, w_name);
 			pstmt.setString(2, w_type);
@@ -232,8 +260,8 @@ public class WineDAOImple implements WineDAO {
 			pstmt.setInt(5, alcohol);
 			pstmt.setString(6, body);
 			pstmt.setString(7, sugar);
-			pstmt.setInt(8, w_id);
-			
+			pstmt.setInt(9, w_id);
+			pstmt.setBytes(8, bytes);		
 			result = pstmt.executeUpdate();			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -246,16 +274,33 @@ public class WineDAOImple implements WineDAO {
 
 	@Override
 	public int updatePerson(PersonVO p_vo) {
-		// TODO Auto-generated method stub
-		return 0;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		try {
+			DriverManager.registerDriver(new OracleDriver());
+			
+			conn = DriverManager.getConnection(URL, USER, PASSWD);
+			pstmt = conn.prepareStatement(INSERT_PERSONAL);			
+		
+			pstmt.setInt(1, p_vo.getPerson_id());
+			pstmt.setString(2, p_vo.getP_name());
+			pstmt.setString(3, p_vo.getP_region());
+			pstmt.setString(4, p_vo.getP_type());
+			pstmt.setString(5, p_vo.getP_body());
+			pstmt.setString(6, p_vo.getP_sugar());
+			
+			result = pstmt.executeUpdate();		
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			closeResources(conn, pstmt);
+		}		
+		return result;
 	}
 
-	@Override
-	public int deleteWine(int wine_id) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-	
 	@Override
 	public int countWine() {
 		Connection conn = null;
@@ -298,14 +343,14 @@ public class WineDAOImple implements WineDAO {
 		return count;
 	}
 	@Override
-	public ArrayList<WineVO> selectBestWine() {
+	public ArrayList<WineVO> selectBestWine() throws Exception {
 		ArrayList<WineVO> winelist = new ArrayList<>();		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
 			conn = DriverManager.getConnection(URL, USER, PASSWD);
-			pstmt = conn.prepareStatement(SELECT_BESTWINE);
+			pstmt = conn.prepareStatement(SELECT_BESTWINE_ONE);
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
@@ -318,7 +363,10 @@ public class WineDAOImple implements WineDAO {
 				String body = rs.getString(7);
 				String sugar = rs.getString(8);
 				
-				WineVO w_vo = new WineVO(w_id, w_name, w_type, grapes, region, alcohol, body, sugar);
+				InputStream in =rs.getBinaryStream(9);
+				BufferedImage bi = ImageIO.read(in);
+				
+				WineVO w_vo = new WineVO(w_id, w_name, w_type, grapes, region, alcohol, body, sugar, bi);
 				winelist.add(w_vo);				
 			}
 		} catch (SQLException e) {
@@ -330,7 +378,7 @@ public class WineDAOImple implements WineDAO {
 		return winelist;
 	}
 	@Override
-	public WineVO select(String wineName) {
+	public WineVO select(String wineName) throws Exception{
 		WineVO w_vo = null;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -352,7 +400,10 @@ public class WineDAOImple implements WineDAO {
 				String body = rs.getString(7);
 				String sugar = rs.getString(8);
 				
-				w_vo = new WineVO(w_id, w_name, w_type, grapes, region, alcohol, body, sugar);
+				InputStream in =rs.getBinaryStream(9);
+				BufferedImage bi = ImageIO.read(in);
+				
+				w_vo = new WineVO(w_id, w_name, w_type, grapes, region, alcohol, body, sugar, bi);
 			} 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -362,28 +413,28 @@ public class WineDAOImple implements WineDAO {
 		return w_vo;
 	}
 	
-	@Override
-	public void insertImage(int wineID) {
+	
+	@Override 
+	public BufferedImage getImage(int foundID) throws Exception{
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		Statement stmt = null;
+		BufferedImage bi= null;
 		
 		try {
 			conn = DriverManager.getConnection(URL, USER, PASSWD);
-			pstmt = conn.prepareStatement(INSERT_IMAGE);
-			
-			int w_id = wineID;
-			pstmt.setInt(1, wineID);
-			pstmt.execute();
-			stmt = conn.createStatement();
-			rs = stmt.executeQuery("select wine_id, wine_img from wineimage where wine_id = " + wineID);
+			pstmt = conn.prepareStatement(DRAW_IMAGE);
+			pstmt.setInt(1, foundID);
+			rs = pstmt.executeQuery();
 			rs.next();
-			
+			InputStream in = rs.getBinaryStream(2);
+			bi = ImageIO.read(in);
+			System.out.println("성공");
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally{
+			closeResources(conn, pstmt, rs);
 		}
-		
+		return bi;
+	}	
 	}
-	
-}

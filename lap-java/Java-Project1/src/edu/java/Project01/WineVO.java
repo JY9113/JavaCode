@@ -1,13 +1,8 @@
 package edu.java.Project01;
-/*	
-WINELIST
-WINE_ID		NUMBER
-WINE_NAME	VARCHAR(200)
-WINE_TYPE	VARCHAR(50)
-GRAPES		VARCHAR2(100)
-REGION		VARCHAR2(200)
-		
-*/
+
+import java.awt.image.BufferedImage;
+
+
 public class WineVO {
 	private int wine_id;
 	private String wine_name;
@@ -17,12 +12,13 @@ public class WineVO {
 	private int alcohol;
 	private String body;
 	private String sugar_content;
+	private BufferedImage bi;
 	
 	// 생성자
 	public WineVO() {}
 	
 	public WineVO(int wine_id, String wine_name, String wine_type, String grapes, String region, int alcohol,
-			String body, String sugar_content) {
+			String body, String sugar_content, BufferedImage bi) {
 		super();
 		this.wine_id = wine_id;
 		this.wine_name = wine_name;
@@ -32,6 +28,7 @@ public class WineVO {
 		this.alcohol = alcohol;
 		this.body = body;
 		this.sugar_content = sugar_content;
+		this.bi = bi;
 	}
 
 	public int getWine_id() {
@@ -82,17 +79,15 @@ public class WineVO {
 	}
 	public void setSugar_content(String sugar_content) {
 		this.sugar_content = sugar_content;
+	}	
+	public BufferedImage getBi() {
+		return bi;
 	}
-	
-//	
-//	private int wine_id;
-//	private String wine_name;
-//	private String wine_type;
-//	private String grapes;
-//	private String region;
-//	private int alcohol;
-//	private String body;
-//	private String sugar_content;
+
+	public void setBi(BufferedImage bi) {
+		this.bi = bi;
+	}
+
 	@Override
 	public String toString() {
 		String str = "타입  :  " + wine_type + "\n품종  :  " + grapes + "\n지역  :  " + region +
